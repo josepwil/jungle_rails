@@ -22,8 +22,12 @@
     SOLD OUT!
   </aside>
   <% end %>
+
+  <% if @active_sale %>
+    <%= @active_sale.percent_off %>
+  <% end %>
   
   <aside class="price">
-    <%= humanized_money_with_symbol product.price %>
+    <%= humanized_money_with_symbol @active_sale ? product.price - (product.price / 100 * @active_sale.percent_off) : product.price %>
   </aside>
 </article>
