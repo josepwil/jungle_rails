@@ -1,12 +1,45 @@
-<h1>Signup!</h1>
+<section>  
+  <header class="page-header">
+    <h1>Signup!</h1>
+  </header>
 
-<%= form_for :user, url: '/users' do |f| %>
+  <div class="row">
 
-  First Name: <%= f.text_field :first_name %>
-  Last Name: <%= f.text_field :last_name %>
-  Email: <%= f.text_field :email %>
-  Password: <%= f.password_field :password %>
-  Password Confirmation: <%= f.password_field :password_confirmation %>
-  <%= f.submit "Submit" %>
+    <div class="col-sm-6 col-sm-offset-1">
 
-<% end %>
+     <%= form_for :user, url: '/users' do |f| %>
+
+      <div class="form-group">
+        <%= label_tag 'first name' %>
+        <%= f.text_field :first_name, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag 'last name' %>
+        <%= f.text_field :last_name, class:'form-control' %>
+      </div>  
+
+      <div class="form-group">
+        <%= label_tag 'email address' %>
+        <%= f.text_field :email, class:'form-control' %>
+      </div>  
+
+      <div class="form-group">
+        <%= label_tag 'password' %>
+        <%= f.password_field :password, class:'form-control' %>
+      </div> 
+
+      <div class="form-group">
+        <%= label_tag 'confirm password' %>
+        <%= f.password_field :password_confirmation, class:'form-control' %>
+      </div>  
+
+
+
+      <%= f.submit "Sign Up", class: 'btn btn-primary' %>
+
+    <% end %>
+
+    </div>
+  </div>
+</section>
