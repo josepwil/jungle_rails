@@ -83,6 +83,60 @@ RSpec.describe User, type: :model do
       @user.save
       expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
     end
+  end
+
+  describe '.authenticate_with_credentials' do
+    before(:each) do
+      @user = User.new
+    end
+
+    it "should pass authentication when data is valid" do
+      @user.first_name = "Test"
+      @user.last_name = "User"
+      @user.email = "testuser@gmail.com"
+      @user.password = "123456789"
+      @user.password_confirmation = "123456789"
+
+      @user.save!
+      @user = User.authenticate_with_credentials('testuser@gmail.com', '123456789')
+      expect(@user).not_to be(nil)
+    end
+
+    it "should fail authentication when data is not valid" do
+      @user.first_name = "Test"
+      @user.last_name = "User"
+      @user.email = "testuser@gmail.com"
+      @user.password = "123456789"
+      @user.password_confirmation = "123456789"
+
+      @user.save!
+      @user = User.authenticate_with_credentials('testuser@gmail.com', '123')
+      expect(@user).to be(nil)
+    end
+
+    it "should pass if a user has trailing spaces before/after their email" do
+      @user.first_name = "Test"
+      @user.last_name = "User"
+      @user.email = "testuser@gmail.com"
+      @user.password = "123456789"
+      @user.password_confirmation = "123456789"
+
+      @user.save!
+      @user = User.authenticate_with_credentials('  testuser@gmail.com  ', '123456789')
+      expect(@user).not_to be(nil) 
+    end
+
+    it "should pass if a user has different cases in their email" do
+      @user.first_name = "Test"
+      @user.last_name = "User"
+      @user.email = "testuser@gmail.com"
+      @user.password = "123456789"
+      @user.password_confirmation = "123456789"
+
+      @user.save!
+      @user = User.authenticate_with_credentials('tEstUser@gmail.com', '123456789')
+      expect(@user).not_to be(nil) 
+    end
     
   end
 end
