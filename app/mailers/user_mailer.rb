@@ -1,9 +1,9 @@
 class UserMailer < ApplicationMailer
   default from: 'no-reply@jungle.com'
 
-  def welcome_email
+  def order_email
     @user = params[:user]
-    @url  = 'http://example.com/login'
-    mail(to: @user.email, subject: 'Welcome to My Awesome Site')
+    @order = params[:order]
+    mail(to: @user.email, subject: "Thank you for your order #{@order.id}")
   end
 end
